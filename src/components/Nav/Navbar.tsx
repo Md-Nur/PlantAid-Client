@@ -2,8 +2,6 @@
 import { ReactNode } from "react";
 import { IoMdMenu } from "react-icons/io";
 import NavRoutes from "./NavRoutes";
-import Image from "next/image";
-import Profile from "./Profile";
 import Link from "next/link";
 import { FaLeaf } from "react-icons/fa";
 

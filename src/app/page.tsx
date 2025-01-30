@@ -25,10 +25,11 @@ export default function Home() {
     <section>
       <Title>প্ল্যান্ট এইড - গ্রিন স্পার্ক</Title>
       <div className="flex flex-wrap justify-center gap-4">
-        {crop.map((crop) => (
+        {crop.map((crop, i) => (
           <Link
             href={crop.url}
             className="card bg-base-100 image-full w-full max-w-96 shadow-xl h-72"
+            key={i}
           >
             <figure>
               <Image

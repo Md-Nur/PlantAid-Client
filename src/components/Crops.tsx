@@ -1,12 +1,24 @@
 "use client";
 import Image from "next/image";
-import { use, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FaLeaf } from "react-icons/fa";
 
 const Crops = ({ name }: { name: string }) => {
   const [progress, setProgress] = useState(0);
   const [preview, setPreview] = useState<string | null>(null);
-  const [data, setData] = useState<any>(null);
+  interface CropData {
+    class: {
+      name: string;
+      cause?: string;
+      symptoms?: string;
+      prevention_management?: string[];
+      after_disease_actions?: string[];
+      healthy_tips?: string[];
+    };
+    confidence: number;
+  }
+  
+  const [data, setData] = useState<CropData | null>(null);
   const imgFile = useRef<HTMLInputElement>(null);
   const modal = useRef<HTMLDialogElement>(null);
 
