@@ -15,13 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`ador antialiased flex h-full flex-col justify-between min-h-screen p-0`}
-      >
+      <body className={`ador antialiased text-primary`}>
         <Navbar>
-          <main className="flex-grow">
-            {children}
-            </main>
+          <main className="">{children}</main>
         </Navbar>
         <Footer />
       </body>

@@ -70,7 +70,7 @@ const Crops = ({ name }: { name: string }) => {
         >
           <label
             htmlFor="cropImg"
-            className="btn btn-outline text-primary border-4 hover:btn-primary w-auto h-auto m-3 p-3"
+            className="btn btn-outline text-secondary border-4 hover:btn-secondary w-auto h-auto m-3 p-3"
           >
             {preview ? (
               <Image
@@ -97,7 +97,7 @@ const Crops = ({ name }: { name: string }) => {
 
           <button
             disabled={progress === 100 || !preview}
-            className="btn btn-primary m-3 block mx-auto"
+            className="btn btn-secondary m-3 block mx-auto"
           >
             আপলোড
           </button>

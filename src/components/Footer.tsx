@@ -4,11 +4,11 @@ const Footer = () => {
   return (
     <footer className="footer bg-base-200 p-10 mt-10">
       <aside>
-        <h6 className="footer-title">Plant Aid</h6>
-        <p>Green Spark</p>
+        <h6 className="footer-title text-4xl font-bold">প্ল্যান্ট এইড</h6>
+        <p className="text-3xl font-bold">গ্রিন স্পার্ক</p>
       </aside>
       <nav>
-        <h6 className="footer-title">Social</h6>
+        <h6 className="footer-title text-2xl">সোশ্যাল</h6>
         <div className="grid grid-flow-col gap-4">
           <a href="https://www.facebook.com/Md.Nur9211/" target="_blank">
             <FaFacebook className="w-7 h-7" />
@@ -21,6 +21,7 @@ const Footer = () => {
           </a>
         </div>
       </nav>
+      
     </footer>
   );
 };

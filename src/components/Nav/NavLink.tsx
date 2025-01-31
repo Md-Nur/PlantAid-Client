@@ -17,7 +17,7 @@ const NavLink = ({ name, route }: { name: string; route?: string }) => {
   return (
     <li className="list-none" onClick={closeNav}>
       <Link
-        className={`${pathname === to ? "font-bold underline" : ""}`}
+        className={`${pathname === to ? "font-bold underline" : ""} text-xl`}
         href={to}
       >
         {name.toUpperCase()}

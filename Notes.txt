@@ -1,6 +1,6 @@
-* background logo er background
-* project er name navbar e
-* logo add 
-* halka details deya lagbe home page e upore
-* all text color -> text-primary
-* change footer like control room
+/ background logo er background
+/ project er name navbar e
+/ logo add 
+/ halka details deya lagbe home page e upore
+/ all text color -> text-primary
+X change footer like control room
