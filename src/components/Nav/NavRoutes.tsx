@@ -15,7 +15,7 @@ const NavRoutes = () => {
         ]}
       />
       <NavLink name="কেনাকাটা" route="/store" />
-      <NavLink name="নিকটস্থ কৃষিবিদ" route="/agronomist" />
+      <NavLink name="নিকটস্থ কৃষিবিদ" route="/agronomists" />
     </>
   );
 };

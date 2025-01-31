@@ -1,7 +1,8 @@
 "use client";
+import axios from "axios";
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { FaLeaf } from "react-icons/fa";
+import { FaUpload } from "react-icons/fa";
 
 const Crops = ({ name }: { name: string }) => {
   const [progress, setProgress] = useState(0);
@@ -17,7 +18,7 @@ const Crops = ({ name }: { name: string }) => {
     };
     confidence: number;
   }
-  
+
   const [data, setData] = useState<CropData | null>(null);
   const imgFile = useRef<HTMLInputElement>(null);
   const modal = useRef<HTMLDialogElement>(null);
@@ -42,18 +43,22 @@ const Crops = ({ name }: { name: string }) => {
     if (file) {
       formData.append("file", file);
     }
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL!}/predict/${name}`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-    setProgress(80);
-    const data = await res.json();
-    setProgress(100);
-    console.log(data);
-    setData(data);
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL!}/predict/${name}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setProgress(80);
+      setProgress(100);
+      setData(res?.data);
+    } catch (error) {
+      console.error(error);
+    }
     modal.current?.showModal();
   };
   return (
@@ -65,7 +70,7 @@ const Crops = ({ name }: { name: string }) => {
         >
           <label
             htmlFor="cropImg"
-            className="btn btn-outline text-accent border-4 hover:btn-accent w-auto h-auto m-3 p-3"
+            className="btn btn-outline text-primary border-4 hover:btn-primary w-auto h-auto m-3 p-3"
           >
             {preview ? (
               <Image
@@ -76,7 +81,7 @@ const Crops = ({ name }: { name: string }) => {
                 src={preview}
               />
             ) : (
-              <FaLeaf className="w-72 h-72" />
+              <FaUpload className="w-72 h-72" />
             )}
           </label>
           <input
@@ -85,12 +90,17 @@ const Crops = ({ name }: { name: string }) => {
             ref={imgFile}
             id="cropImg"
             type="file"
-            className="file-input file-input-bordered file-input-accent w-full max-w-xs"
+            // className="file-input file-input-bordered file-input-accent w-full max-w-xs"
+            className="hidden"
             required
-            placeholder="Upload Image"
           />
 
-          <button className="btn btn-accent m-3 block mx-auto">Upload</button>
+          <button
+            disabled={progress === 100 || !preview}
+            className="btn btn-primary m-3 block mx-auto"
+          >
+            আপলোড
+          </button>
         </form>
       ) : (
         <div className="w-full h-full flex justify-center items-center">
@@ -107,74 +117,87 @@ const Crops = ({ name }: { name: string }) => {
         <div className="modal-box w-11/12 max-w-5xl">
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <button
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              onClick={() => {
+                setPreview(null);
+                setData(null);
+                setProgress(0);
+              }}
+            >
               ✕
             </button>
           </form>
-          <div className="card card-side">
-            <figure>
+          <div className="card card-side flex-wrap">
+            <figure className="mx-auto md:mx-0">
               <Image
                 alt="crop photos"
                 height={300}
                 width={300}
-                className="w-72 h-full object-cover"
+                className="w-72 md:w-96 h-full object-cover"
                 src={preview || `/${name}.jpg`}
               />
             </figure>
-            <div className="card-body">
-              <h2 className="card-title">
-                {data?.class?.name} ({data?.confidence.toFixed(2)}%)
-              </h2>
-              {data?.class?.cause && (
-                <p>
-                  <span className="font-bold">কারণঃ </span>
-                  {data?.class?.cause}
-                </p>
-              )}
-              {data?.class?.symptoms && (
-                <p>
-                  <span className="font-bold">লক্ষণঃ </span>
+            {data && data?.confidence > 50 ? (
+              <div className="card-body my-0 py-0 max-w-xl">
+                <h2 className="card-title">{data?.class?.name}</h2>
+                {data?.class?.cause && (
+                  <p>
+                    <span className="font-bold">কারণঃ </span>
+                    {data?.class?.cause}
+                  </p>
+                )}
+                {data?.class?.symptoms && (
+                  <p>
+                    <span className="font-bold">লক্ষণঃ </span>
 
-                  {data?.class?.symptoms}
-                </p>
-              )}
-              {data?.class?.prevention_management && (
-                <>
-                  <span className="font-bold">প্রতিরোধ ও ব্যবস্থাপনাঃ </span>
-                  <ul className="list-disc list-inside">
-                    {data?.class?.prevention_management.map(
-                      (item: string, index: number) => (
-                        <li key={index}>{item}</li>
-                      )
-                    )}
-                  </ul>
-                </>
-              )}
-              {data?.class?.after_disease_actions && (
-                <>
-                  <span className="font-bold">প্রতিকারঃ </span>
-                  <ul className="list-disc list-inside">
-                    {data?.class?.after_disease_actions.map(
-                      (item: string, index: number) => (
-                        <li key={index}>{item}</li>
-                      )
-                    )}
-                  </ul>
-                </>
-              )}
-              {data?.class?.healthy_tips && (
-                <>
-                  <span className="font-bold">টিপসঃ </span>
-                  <ul className="list-disc list-inside">
-                    {data?.class?.healthy_tips.map(
-                      (item: string, index: number) => (
-                        <li key={index}>{item}</li>
-                      )
-                    )}
-                  </ul>
-                </>
-              )}
-            </div>
+                    {data?.class?.symptoms}
+                  </p>
+                )}
+                {data?.class?.prevention_management && (
+                  <>
+                    <span className="font-bold">প্রতিরোধ ও ব্যবস্থাপনাঃ </span>
+                    <ul className="list-disc list-inside">
+                      {data?.class?.prevention_management.map(
+                        (item: string, index: number) => (
+                          <li key={index}>{item}</li>
+                        )
+                      )}
+                    </ul>
+                  </>
+                )}
+                {data?.class?.after_disease_actions && (
+                  <>
+                    <span className="font-bold">প্রতিকারঃ </span>
+                    <ul className="list-disc list-inside">
+                      {data?.class?.after_disease_actions.map(
+                        (item: string, index: number) => (
+                          <li key={index}>{item}</li>
+                        )
+                      )}
+                    </ul>
+                  </>
+                )}
+                {data?.class?.healthy_tips && (
+                  <>
+                    <span className="font-bold">টিপসঃ </span>
+                    <ul className="list-disc list-inside">
+                      {data?.class?.healthy_tips.map(
+                        (item: string, index: number) => (
+                          <li key={index}>{item}</li>
+                        )
+                      )}
+                    </ul>
+                  </>
+                )}
+              </div>
+            ) : (
+              <div className="card-body">
+                <h2 className="card-title">
+                  দুঃখিত, আমরা আপনার ছবিতে কোন ফসল চিনতে পারিনি। 😓
+                </h2>
+              </div>
+            )}
           </div>
         </div>
       </dialog>
