@@ -16,6 +16,7 @@ const Crops = ({ name }: { name: string }) => {
       after_disease_actions?: string[];
       healthy_tips?: string[];
     };
+    warn?: string;
     confidence: number;
   }
 
@@ -44,6 +45,7 @@ const Crops = ({ name }: { name: string }) => {
       formData.append("file", file);
     }
     try {
+      setProgress(80);
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL!}/predict/${name}`,
         formData,
@@ -53,11 +55,10 @@ const Crops = ({ name }: { name: string }) => {
           },
         }
       );
-      setProgress(80);
       setProgress(100);
       setData(res?.data);
     } catch (error) {
-      console.error(error);
+      setData((error as any)?.response?.data);
     }
     modal.current?.showModal();
   };
@@ -139,7 +140,10 @@ const Crops = ({ name }: { name: string }) => {
               />
             </figure>
             {data && data?.confidence > 50 ? (
-              <div className="card-body my-0 py-0 max-w-xl">
+              <div className="card-body my-0 py-0 max-w-xl justify-center">
+                {data?.warn && (
+                  <h2 className="card-title text-error">{data?.warn}</h2>
+                )}
                 <h2 className="card-title">{data?.class?.name}</h2>
                 {data?.class?.cause && (
                   <p>
