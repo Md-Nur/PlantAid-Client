@@ -58,7 +58,7 @@ const Crops = ({ name }: { name: string }) => {
       setProgress(100);
       setData(res?.data);
     } catch (error) {
-      setData((error as any)?.response?.data);
+      console.error(error);
     }
     modal.current?.showModal();
   };

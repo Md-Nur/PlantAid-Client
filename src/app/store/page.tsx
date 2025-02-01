@@ -1,5 +1,6 @@
 import Title from "@/components/Title";
 import { products } from "./data";
+import Image from "next/image";
 
 const Store = () => {
   return (
@@ -9,7 +10,9 @@ const Store = () => {
         {products?.map((product) => (
           <div key={product.id} className="card bg-base-200 w-96 shadow-xl">
             <figure>
-              <img
+              <Image
+                width={500}
+                height={500}
                 src={product?.image_url}
                 alt={product?.name}
                 className="w-full h-72 object-cover"
