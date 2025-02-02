@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`ador antialiased text-primary`}>
         <Navbar>
-          <main className="">{children}</main>
+          <main className="min-h-[calc(100vh-300px)]">{children}</main>
         </Navbar>
         <Footer />
       </body>
