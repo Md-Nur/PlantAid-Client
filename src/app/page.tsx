@@ -18,6 +18,11 @@ const crop = [
     image: "/pepper.jpg",
     url: "/pepper",
   },
+  {
+    name: "অন্যান্য",
+    image: "/logo.png",
+    url: "/other-plants",
+  },
 ];
 
 export default function Home() {

@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import heic2any from "heic2any";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { FaUpload } from "react-icons/fa";
@@ -7,6 +8,9 @@ import { FaUpload } from "react-icons/fa";
 const Crops = ({ name }: { name: string }) => {
   const [progress, setProgress] = useState(0);
   const [preview, setPreview] = useState<string | null>(null);
+  const [blobFile, setBlobFile] = useState<Blob | null>(null);
+  const [converting, setConverting] = useState(false);
+
   interface CropData {
     class: {
       name: string;
@@ -24,9 +28,25 @@ const Crops = ({ name }: { name: string }) => {
   const imgFile = useRef<HTMLInputElement>(null);
   const modal = useRef<HTMLDialogElement>(null);
 
-  const onFileChange = () => {
+  const onFileChange = async () => {
     const file = imgFile.current?.files ? imgFile.current.files[0] : null;
     if (file) {
+      if (file.name.toLowerCase().endsWith(".heic")) {
+        // Convert HEIC to JPEG using heic2any
+        setConverting(true);
+        const convertedBlob = await heic2any({
+          blob: file,
+          toType: "image/jpeg",
+          quality: 0.9, // Adjust quality if needed
+        });
+
+        // Create a URL for the converted image
+        const imageUrl = URL.createObjectURL(convertedBlob as Blob);
+        setBlobFile(convertedBlob as Blob);
+        setPreview(imageUrl);
+        setConverting(false);
+        return;
+      }
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result as string);
@@ -41,13 +61,15 @@ const Crops = ({ name }: { name: string }) => {
     const file = imgFile?.current?.files ? imgFile.current.files[0] : null;
     const formData = new FormData();
     setProgress(40);
-    if (file) {
+    if (blobFile) {
+      formData.append("file", blobFile);
+    } else if (file) {
       formData.append("file", file);
     }
     try {
       setProgress(80);
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL!}/predict/${name}`,
+        `${process.env.NEXT_PUBLIC_API_URL!}/plant/${name}`,
         formData,
         {
           headers: {
@@ -78,9 +100,15 @@ const Crops = ({ name }: { name: string }) => {
                 alt="crop photos"
                 height={300}
                 width={300}
-                className="w-72"
+                className="w-72 h-72 object-cover"
                 src={preview}
               />
+            ) : converting ? (
+              <div className="flex flex-col justify-center items-center text-center w-72 h-72">
+                <span className="text-secondary">Converting heic to jpg...
+                </span>
+                <span className="loading loading-bars loading-lg"></span>
+              </div>
             ) : (
               <FaUpload className="w-72 h-72" />
             )}

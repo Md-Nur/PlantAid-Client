@@ -1,6 +1,10 @@
-import Crops from "@/components/Crops";
-import Title from "@/components/Title";
+"use client";
 
+import dynamic from "next/dynamic";
+import Title from "@/components/Title";
+const Crops = dynamic(() => import("@/components/Crops"), {
+  ssr: false,
+});
 const Potato = () => {
   return (
     <>

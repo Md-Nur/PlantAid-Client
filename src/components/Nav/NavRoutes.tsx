@@ -12,6 +12,7 @@ const NavRoutes = () => {
           { name: "আলু", url: "/potato" },
           { name: "টমেটো", url: "/tomato" },
           { name: "মরিচ", url: "/pepper" },
+          { name: "অন্যান্য", url: "/other-plants" },
         ]}
       />
       <NavLink name="কেনাকাটা" route="/store" />
