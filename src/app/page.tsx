@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,7 +19,7 @@ const crop = [
   },
   {
     name: "অন্যান্য",
-    image: "/logo.png",
+    image: "/other.jpg",
     url: "/other-plants",
   },
 ];
@@ -30,8 +29,7 @@ export default function Home() {
     <section className="my-10 w-full">
       <p className="text-2xl text-center max-w-5xl mx-auto my-10">
         প্ল্যান্ট এইড হলো কৃত্তিম বুদ্ধিমত্তা ভিত্তিক একটা সার্ভিস যেটা ফসলের
-        (আলু, টমেটো, মরিচ) পাতার ছবি এর মাধ্যমে ওই ফসলের রোগ শনাক্ত করতে
-        সক্ষম।
+        (আলু, টমেটো, মরিচ) পাতার ছবি এর মাধ্যমে ওই ফসলের রোগ শনাক্ত করতে সক্ষম।
       </p>
       <div className="flex flex-wrap justify-center gap-4">
         {crop.map((crop, i) => (
