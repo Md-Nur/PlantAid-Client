@@ -29,7 +29,9 @@ export default function Home() {
     <section className="my-10 w-full">
       <p className="text-2xl text-center max-w-5xl mx-auto my-10">
         প্ল্যান্ট এইড হলো কৃত্তিম বুদ্ধিমত্তা ভিত্তিক একটা সার্ভিস যেটা ফসলের
-        (আলু, টমেটো, মরিচ) পাতার ছবি এর মাধ্যমে ওই ফসলের রোগ শনাক্ত করতে সক্ষম।
+        (আলু, টমেটো, মরিচ, আপেল, ব্লুবেরি, চেরি, ভুট্টা, আঙ্গুর, কমলা, পীচ,
+        রাস্পবেরি, সয়াবিন, স্কোয়াশ, স্ট্রবেরি) পাতার ছবি এর মাধ্যমে ওই ফসলের
+        রোগ শনাক্ত করতে সক্ষম।
       </p>
       <div className="flex flex-wrap justify-center gap-4">
         {crop.map((crop, i) => (
