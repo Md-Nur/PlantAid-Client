@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PlantAid: Crop Disease Detection using TensorFlow CNN
 
-## Getting Started
+![GitHub](https://img.shields.io/badge/Language-Python-blue)
+![GitHub](https://img.shields.io/badge/Framework-TensorFlow-orange)
+![GitHub](https://img.shields.io/badge/Backend-FastAPI-green)
+![GitHub](https://img.shields.io/badge/Frontend-Next.js-purple)
 
-First, run the development server:
+A web application that analyzes leaf photos of various crops to detect diseases using a **TensorFlow CNN model**. The application supports **14+ crops**, including potato, tomato, pepper, apple, blueberry, cherry, corn, grape, orange, peach, raspberry, soybean, squash, and strawberry.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Disease Detection:** Upload a leaf photo, and the app will detect if there is any disease and identify it.
+- **Multi-Crop Support:** Works for 14+ crops, with the flexibility to add more.
+- **User-Friendly Interface:** Built with **Next.js** for a seamless frontend experience.
+- **Scalable Backend:** Powered by **FastAPI** for efficient and fast predictions.
+- **Future Plans:** Developing a mobile app that can run offline for use in remote areas.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Deep Learning:** TensorFlow, Convolutional Neural Networks (CNN)
+- **Backend:** FastAPI
+- **Frontend:** Next.js
+- **Deployment:** Docker, Hugging Face
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Dataset
 
-## Deploy on Vercel
+The model was trained on a [Plant Village](https://www.kaggle.com/datasets/arjuntejaswi/plant-village) & [New Plant Diseases](https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset) dataset of crop leaf images, categorized by crop type and disease. The dataset includes images for all supported crops.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Future Enhancements
+
+- Add support for more crops.
+- Develop a mobile app version that works offline.
+- Improve model accuracy with more training data.
+- Add multilingual support for farmers.
+
+---
+
+## Acknowledgments
+
+A special thanks to **Bipin Dada** for his invaluable help with model format conversion and deployment. Without his guidance, this project would not have been possible.
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any improvements.
